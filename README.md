@@ -53,10 +53,9 @@ Even without full extraction, this project supports:
 │   ├── upload_entities.py
 │   ├── cluster.py
 │   └── theme.py
-├── notebooks/              # Jupyter notebook for Cypher queries
-│   └── explore_graph.ipynb
 ├── neo4j/                  # Schema helpers (e.g., constraints)
-│   └── schema_constraints.cypher
+│   ├── explore_graph.txt
+│   └── indexes_constraints.txt
 ├── .env.example            # Config template
 ├── requirements.txt        # Python dependencies
 └── README.md
@@ -86,7 +85,13 @@ cp .env.example .env
 pip install -r requirements.txt
 ```
 
-4. Run extraction and upload:
+4. Create indexes and constraints:
+
+```Cypher
+(in Neo4j) neo4j/indexes_constraints.txt
+```
+
+5. Run extraction and upload:
 
 ```bash
 python Scripts/driver.py
@@ -95,9 +100,9 @@ python scripts/extract_places.py
 python scripts/upload_entities.py
 ```
 
-5. Explore the graph:
+6. Explore the graph:
 
-* Run `notebooks/explore_graph.ipynb`
+* Run sample queries in Neo4j from explore_graph.txt
 * Connect to your Neo4j Aura instance and try out thematic or relational queries
 
 ---
