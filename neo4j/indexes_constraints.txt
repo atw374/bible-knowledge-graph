@@ -1,0 +1,11 @@
+# Necessary indexes and constraints for use on the knowledge graph. Run before uploading data into Neo4j
+
+CREATE CONSTRAINT chapter_unique IF NOT EXISTS FOR (c:Chapter) REQUIRE c.name IS UNIQUE;
+CREATE CONSTRAINT person_id_unique IF NOT EXISTS FOR (p:Person) REQUIRE p.id IS UNIQUE;
+CREATE INDEX person_name_index IF NOT EXISTS FOR (p:Person) ON (p.name);
+CREATE CONSTRAINT place_id_unique IF NOT EXISTS FOR (p:Place) REQUIRE p.id IS UNIQUE;
+CREATE CONSTRAINT place_name_unique IF NOT EXISTS FOR (p:Place) REQUIRE p.name IS UNIQUE;
+CREATE CONSTRAINT verse_id_unique IF NOT EXISTS FOR (v:Verse) REQUIRE v.verse_id IS UNIQUE;
+CREATE FULLTEXT INDEX keyword IF NOT EXISTS FOR (c:Chunk) ON EACH [c.text];
+CREATE VECTOR INDEX verse_embeddings IF NOT EXISTS FOR (v:Verse) ON (v.verse_id)
+OPTIONS {indexConfig: {`vector.dimensions`: 1536, `vector.similarity_function`: 'cosine'}};
