@@ -1,0 +1,25 @@
+{
+  "translation": "KJV: King James Version (1769) with Strongs Numbers and Morphology and CatchWords",
+  "books": [
+    {
+      "name": "Genesis",
+      "chapters": [
+        {
+          "chapter": 1,
+          "verses": [
+            {
+              "verse": 1,
+              "text": "In the beginning God created the heaven and the earth."
+            },
+            {
+              "verse": 2,
+              "text": "And the earth was without form and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters."
+            },
+            {
+              "verse": 3,
+              "text": "And God said, Let there be light: and there was light."
+            },
+            {
+              "verse": 4,
+              "text": "And God saw the light, that it was good: and God divided the light from the darkness."
+            }
