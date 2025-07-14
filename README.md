@@ -89,6 +89,7 @@ pip install -r requirements.txt
 4. Run extraction and upload:
 
 ```bash
+python Scripts/driver.py
 python scripts/extract_people.py
 python scripts/extract_places.py
 python scripts/upload_entities.py
@@ -130,4 +131,4 @@ MIT — free to use, modify, and build upon.
 ## 🙋‍♂️ Author
 
 **Andrew W.**
-Built with curiosity, scripture, and a desire to connect 
+Built with curiosity, scripture, and the desire to explore and connect God's word
