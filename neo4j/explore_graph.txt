@@ -1,0 +1,48 @@
+# Below are several Cypher queries for the bible-knowledge-graph aimed at sparking curiosity for analysis and connections of key figures, concepts, and themes
+
+# 🔍 Chapters that mention both Moses and Egypt
+MATCH (m:Person {name: "Moses"})<-[:MENTIONS]-(v:Verse)-[:MENTIONS]->(e:Place {name: "Egypt"})
+MATCH (v)-[:IN_CHAPTER]->(c:Chapter)
+RETURN DISTINCT c.name AS chapter
+ORDER BY chapter
+
+# 🧠 Top 10 most mentioned people
+MATCH (p:Person)<-[:MENTIONS]-(v:Verse)
+RETURN p.name, count(*) AS mentions
+ORDER BY mentions DESC
+LIMIT 10
+
+# 🌍 Places associated with Jesus
+MATCH (jesus:Person {name: "Jesus"})<-[:MENTIONS]-(v:Verse)-[:MENTIONS]->(place:Place)
+RETURN place.name, count(*) AS co_mentions
+ORDER BY co_mentions DESC
+
+# 🎭 Themes shared by verses that mention David
+MATCH (d:Person {name: "David"})<-[:MENTIONS]-(v:Verse)-[:HAS_THEME]->(t:Theme)
+RETURN t.name, count(*) AS count
+ORDER BY count DESC
+
+# 📚 Verses in a theme cluster labeled 'Prophecy'
+MATCH (v:Verse)-[:HAS_THEME]->(t:Theme {name: "Prophecy"})
+RETURN v.verseId, v.text
+LIMIT 20
+
+# 🧭 People that connect Old and New Testaments
+MATCH (p:Person)<-[:MENTIONS]-(v:Verse)-[:IN_BOOK]->(b:Book)
+WITH p.name AS person, collect(DISTINCT b.name) AS books
+WHERE any(book IN books WHERE book STARTS WITH "Genesis" OR book = "Isaiah")
+  AND any(book IN books WHERE book STARTS WITH "Matthew" OR book = "John")
+RETURN person, books
+
+# 🔗 Verse pairs sharing the same theme
+MATCH (v1:Verse)-[:HAS_THEME]->(t:Theme)<-[:HAS_THEME]-(v2:Verse)
+WHERE v1 <> v2
+RETURN DISTINCT v1.verseId, v2.verseId, t.name
+LIMIT 20
+
+# 🧬 Co-occurrence network: who appears with who
+MATCH (v:Verse)-[:MENTIONS]->(p1:Person), (v)-[:MENTIONS]->(p2:Person)
+WHERE id(p1) < id(p2)
+RETURN p1.name, p2.name, count(*) AS co_mentions
+ORDER BY co_mentions DESC
+LIMIT 15
