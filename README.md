@@ -45,19 +45,21 @@ Even without full extraction, this project supports:
 
 ```
 .
-├── data/                   # Bible input JSON (not uploaded)
-├── outputs/                # Extracted JSON files (excluded from repo)
-├── scripts/                # Core processing scripts
-│   ├── extract_people.py
-│   ├── extract_places.py
-│   ├── upload_entities.py
-│   ├── cluster.py
-│   └── theme.py
-├── neo4j/                  # Schema helpers (e.g., constraints)
+├── data/                     # Bible input JSON (not uploaded)
+├── outputs/                  # Extracted JSON files (excluded from repo)
+├── neo4j/                    # Schema helpers (e.g., constraints)
 │   ├── explore_graph.txt
 │   └── indexes_constraints.txt
-├── .env.example            # Config template
-├── requirements.txt        # Python dependencies
+├── scripts/                  # Core processing scripts (alphabetic, not in order of execution)
+│   ├── cluster.py            # Clusters Verse embeddings for theme extraction
+│   ├── driver.py             # Connects and creates initial Neo4j graph
+│   ├── jsonParse.py          # [Optional - only if using JSON over .txt] Parses Bible JSON text 
+│   ├── people_extract.py     # Extracts people nodes from text (JSON)
+│   ├── peopleplace_upload.py # Uploads people and place nodes to Neo4j
+│   ├── places_extract.py     # Extracts place nodes from text (JSON)
+│   └── theme.py              # Automates the process of clustering Bible verse embeddings, generates thematic labels for each cluster using GPT-4, and uploads the results to Neo4j
+├── .env.example              # Config template
+├── requirements.txt          # Python dependencies
 └── README.md
 ```
 
@@ -91,13 +93,14 @@ pip install -r requirements.txt
 (in Neo4j) neo4j/indexes_constraints.txt
 ```
 
-5. Run extraction and upload:
+5. Run extraction and upload (verify success after each file - bear in mind API cost): 
 
 ```bash
 python Scripts/driver.py
 python scripts/extract_people.py
 python scripts/extract_places.py
 python scripts/upload_entities.py
+python scripts/theme.py
 ```
 
 6. Explore the graph:
