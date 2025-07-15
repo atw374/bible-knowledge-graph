@@ -1,6 +1,6 @@
 # 📖 Bible Knowledge Graph
 
-A Python + Neo4j project to extract people, places, and themes from the Bible using OpenAI. This graph-based pipeline explores how structured knowledge can be derived from unstructured text to support Biblical understanding through semantic analysis, thematic clustering, and future AI-assisted exploration.
+A Python + Neo4j project to extract people, places, and themes from the Bible using OpenAI. This graph-based pipeline explores how structured knowledge can be derived from unstructured text to support Biblical understanding through semantic analysis, thematic clustering, and AI-assisted exploration. The goal is for this work to begin to reveal patterns in the text that help us understand how the Bible is connected.
 
 ---
 
@@ -8,13 +8,27 @@ A Python + Neo4j project to extract people, places, and themes from the Bible us
 
 * ✅ Extracts canonical **people** and **place** entities from each verse (with aliases)
 * ✅ Enriches the graph with **themes** via semantic clustering of OpenAI embeddings
-* ✅ Builds a fully queryable **Neo4j knowledge graph** with relationships like:
+* ✅ Builds a fully queryable **Neo4j knowledge graph** with relationships:
 
-  * `(:Verse)-[:MENTIONS]->(:Person)`
-  * `(:verse)-[:IN_CHAPTER]->(:Chapter)`
-  * `(:Verse)-[:HAS_THEME]->(:Theme)`
+
+  * `(:Book)-[:HAS_THEME]->(:Theme)`
+
+  * `(:Chapter)-[:IN_BOOK]->(:Book)`
+  * `(:Chapter)-[:HAS_THEME]->(:Theme)`
+
+  * `(:Place)-[:IN_BOOK]->(:Book)`
+  * `(:Place)-[:IN_CHAPTER]->(:Chapter)`
+    
   * `(:Person)-[:IN_BOOK]->(:Book)`
-* ✅ Designed for future extensions like question answering, dashboards, or semantic search
+  * `(:Person)-[:IN_CHAPTER]->(:Chapter)`
+    
+  * `(:Verse)-[:MENTIONS]->(:Person)`
+  * `(:Verse)-[:MENTIONS]->(:Place)`
+  * `(:Verse)-[:IN_CHAPTER]->(:Chapter)`
+  * `(:Verse)-[:HAS_THEME]->(:Theme)`
+  * `(:Verse)-[:NEXT_VERSE]->(:Verse)`
+    
+* ✅ Designed for LLMs, question answering, dashboards, and semantic search
 
 ---
 
